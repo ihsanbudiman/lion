@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: local
+      POSTGRES_PASSWORD: local
+      POSTGRES_DB: defaultdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d/
+    networks:
+      - lion-network
+
+
+  app:
+    build: .
+    container_name: app_container
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - APP_PORT=8080
+      - DB_SOURCE_HOST=postgres
+      - DB_SOURCE_PORT=5432
+      - DB_SOURCE_USER=local
+      - DB_SOURCE_PASSWORD=local
+      - DB_SOURCE_NAME=db_source
+      - DB_DESTINATION_HOST=postgres
+      - DB_DESTINATION_PORT=5432
+      - DB_DESTINATION_USER=local
+      - DB_DESTINATION_PASSWORD=local
+      - DB_DESTINATION_NAME=db_destination
+    networks:
+      - lion-network
+
+networks:
+  lion-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+
+
