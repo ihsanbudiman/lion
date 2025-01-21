@@ -1,6 +1,7 @@
-## Pre-requisites
+## Prerequisites
 * Go 1.23.3
 * Docker
+* make command
 * Soda v6 for migration
     * `go install github.com/gobuffalo/pop/v6/soda@latest`
 
@@ -10,8 +11,8 @@
 * run migration
     * `$ make migrate-source-up` 
     * `$ make migrate-destination-up`
-* run seed
+* run seed only once
     * `$ make seed`
 
 ## Sync Product Data
-you can access sync product endpoint at `http://localhost:8080/sync-product` with POST
+you can access sync product endpoint at `http://localhost:8080/sync-product` with POST method
